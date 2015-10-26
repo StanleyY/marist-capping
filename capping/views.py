@@ -3,12 +3,13 @@ import json
 from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.shortcuts import render_to_response
 from capping.models import *
 
 
 # Create your views here.
 def homeView(request):
-  return HttpResponse("Hello, world. You're at the polls index.")
+  return render_to_response('index.html')
 
 
 def getInternalClass(request):

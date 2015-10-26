@@ -65,6 +65,10 @@ DATABASES = {
     }
 }
 
+TEMPLATE_DIRS = (
+    BASE_DIR + '/capping/templates/',
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
