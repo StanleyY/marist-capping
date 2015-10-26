@@ -7,7 +7,7 @@ urlpatterns = patterns('capping.views',
     # url(r'^$', 'capping.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     (r'^admin/', include(admin.site.urls)),
-    (r'^test$', 'getClass'),
+    (r'^test$', 'getExternalClass'),
     (r'^$', 'homeView'),
     (r'^.*/$', 'homeView'),
 )
