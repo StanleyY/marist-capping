@@ -13,11 +13,11 @@ def homeView(request):
 
 
 def getInternalClass(request):
-  obj = InternalCourse.objects.get(id=1)
+  obj = InternalCourse.objects.order_by('?').first()
   data = serializers.serialize('json', [ obj, ])
   return HttpResponse(data)
 
 def getExternalClass(request):
-  obj = ExternalCourse.objects.get(id=1999)
+  obj = ExternalCourse.objects.order_by('?').first()
   data = serializers.serialize('json', [ obj, ])
   return HttpResponse(data)

@@ -11,17 +11,32 @@
       Within Controller <br><br>
       {% verbatim angular %}
       <div>External Courses:</div>
-      <div ng-repeat="course in externalCourses">
-        {{course.subject}}
-        {{course.number}}
-        {{course.title}}
-      </div>
+      <table border="1">
+        <tr>
+          <td>Subject</td>
+          <td>Number</td>
+          <td>Title</td>
+        </tr>
+        <tr ng-repeat="course in externalCourses">
+          <td>{{course.subject}}</td>
+          <td>{{course.number}}</td>
+          <td>{{course.title}}</td>
+        </tr>
+      </table>
+      <br>
       <div>Internal Courses:</div>
-      <div ng-repeat="course in internalCourses">
-        {{course.subject}}
-        {{course.number}}
-        {{course.title}}
-      </div>
+      <table border="1">
+        <tr>
+          <td>Subject</td>
+          <td>Number</td>
+          <td>Title</td>
+        </tr>
+        <tr ng-repeat="course in internalCourses">
+          <td>{{course.subject}}</td>
+          <td>{{course.number}}</td>
+          <td>{{course.title}}</td>
+        </tr>
+      </table>
       {% endverbatim angular %}
       <br>
       <button ng-click="getAnotherCourse()">Get More Courses</button>
