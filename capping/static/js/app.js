@@ -1,10 +1,10 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-angular.module('capping', [
-  'ngRoute',
-  'capping.controllers'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+var app = angular.module('cappingApp', ['ngRoute', 'cappingApp.controllers']);
+
+app.config(function($httpProvider) {
+  $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+});
+
+app.config(function ($routeProvider,$locationProvider) {
+});

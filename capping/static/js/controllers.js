@@ -1,5 +1,6 @@
-angular.module('starter.controllers', [])
+angular.module('cappingApp.controllers', [])
 
 .controller('MainCtrl', function($scope) {
-  $scope.test = 'test';
+  console.log("MAIN CONTROLLER STARTED");
+  $scope.test = 'value';
 })
