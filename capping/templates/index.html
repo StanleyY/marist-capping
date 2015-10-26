@@ -6,12 +6,26 @@
     <script src="{{ STATIC_URL }}js/app.js"></script>
  </head>
   <body ng-app="cappingApp">
-    Hello World!
+    <b>Random Courses</b>
     <div ng-controller="MainCtrl">
-      Controller
+      Within Controller <br><br>
       {% verbatim angular %}
-      {{test}}
+      <div>External Courses:</div>
+      <div ng-repeat="course in externalCourses">
+        {{course.subject}}
+        {{course.number}}
+        {{course.title}}
+      </div>
+      <div>Internal Courses:</div>
+      <div ng-repeat="course in internalCourses">
+        {{course.subject}}
+        {{course.number}}
+        {{course.title}}
+      </div>
       {% endverbatim angular %}
+      <br>
+      <button ng-click="getAnotherCourse()">Get More Courses</button>
     </div>
+    Out of Controller
   </body>
 </html>

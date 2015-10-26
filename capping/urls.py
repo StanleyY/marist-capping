@@ -6,7 +6,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('capping.views',
     (r'^admin/', include(admin.site.urls)),
-    (r'^test$', 'getExternalClass'),
+    (r'^api/external$', 'getExternalClass'),
+    (r'^api/internal$', 'getInternalClass'),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name="home"),
     url(r'^.*$', TemplateView.as_view(template_name='index.html'), name="home"),
 )
