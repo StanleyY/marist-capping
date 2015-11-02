@@ -8,7 +8,6 @@ angular.module('cappingApp.controllers', [])
   $scope.majorsReqs = {};
   $scope.selectedMajor = "";
   $scope.requirements = [];
-  $scope.test = true;
 
   $scope.init = function(){
     var req = {
@@ -94,4 +93,16 @@ angular.module('cappingApp.controllers', [])
 
     this.subjectChange();
   }
+
+  $scope.$watch('entries', function () {
+    var marist_classes = $scope.entries.map(
+        function(val){return val.selectedMaristCourse.slice(0, -1);});
+    $scope.requirements.forEach(function(req){
+      if (marist_classes.indexOf(req.name) > -1) {
+        req.fulfilled = true;
+      } else {
+        req.fulfilled = false;
+      }
+    }.bind(marist_classes))
+  }, true);
 })

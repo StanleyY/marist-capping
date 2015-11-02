@@ -12,4 +12,5 @@
 }
 .requirement-true{
   text-decoration: line-through;
+  color: red;
 }
