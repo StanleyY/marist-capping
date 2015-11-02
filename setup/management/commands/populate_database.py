@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from capping.models import ExternalCourse, InternalCourse, Mapping
+from capping.models import *
 
 
 class Command(BaseCommand):
@@ -55,6 +55,12 @@ class Command(BaseCommand):
 
       self.stdout.write("Inserted %d" % working)
       self.stdout.write("Failed %d" % broken)
-
+    elif model_name == 'major_req':
+      with open(filename, 'r') as f:
+        for line in f:
+          major, course_name, course_num = line.strip().replace('"', '').rsplit(',', 2)
+          major_req = MajorReq(major=unicode(major, errors='ignore'),
+                               course=unicode(course_name + " " + course_num, errors='ignore'))
+          major_req.save()
     else:
       self.stdout.write('Unknown model type')

@@ -47,3 +47,17 @@ def getMaristEqual(request):
   internal = InternalCourse.objects.get(id=mapping.internal_id)
   internal_options = [str(internal.subject) + " " + str(internal.number)]
   return HttpResponse(json.dumps({'courses': internal_options}))
+
+# TODO remove this and redo it properly
+def getMajorReq(request):
+  majors = {}
+  majors_objs = MajorReq.objects.all()
+  for major in majors_objs:
+    if major.major in majors:
+      if major.course not in majors[major.major]:
+        majors[major.major].append(major.course)
+    else:
+      majors[major.major] = [major.course]
+
+  data = json.dumps(majors)
+  return HttpResponse(data)

@@ -38,6 +38,15 @@
       </div>
       <br>
       <button ng-click="addEntry()">Add Entry</button>
+      <br><br><br>
+      <div><b>Major Requirements Demo</b></div>
+      <div class="majors">
+        Major:
+        <select ng-model="selectedMajor" ng-change="majorChanged()">
+          <option ng-repeat="major in majors">{{major}}</option>
+        </select>
+        <div class="requirement" ng-repeat="req in requirements">{{req}}</div>
+      </div>
     </div>
     {% endverbatim angular %}
   </body>

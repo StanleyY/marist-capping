@@ -19,3 +19,9 @@ class Mapping(models.Model):
 
   class Meta:
     unique_together = (('external', 'internal'),)
+
+
+# TODO: Delete and redo this
+class MajorReq(models.Model):
+  major = models.CharField(max_length=120)
+  course = models.CharField(max_length=30)

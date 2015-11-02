@@ -7,3 +7,9 @@
 .selection {
   display: inline-block;
 }
+
+.requirement-false{
+}
+.requirement-true{
+  text-decoration: line-through;
+}

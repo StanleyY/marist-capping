@@ -4,9 +4,13 @@ angular.module('cappingApp.controllers', [])
   console.log("MAIN CONTROLLER STARTED");
   $scope.subjNumMap = {};
   $scope.entries = [];
+  $scope.majors = [];
+  $scope.majorsReqs = {};
+  $scope.selectedMajor = "";
+  $scope.requirements = [];
 
   $scope.init = function(){
-    var req_to_ext = {
+    var req = {
       method: 'GET',
       url: '/api/get_external_data',
       headers: {
@@ -14,20 +18,34 @@ angular.module('cappingApp.controllers', [])
       },
     };
 
-    $http(req_to_ext).then(
+    $http(req).then(
       function(response){
         $scope.subjNumMap = response.data;
         $scope.addEntry(); // Add an entry once all the data is ready
       },
-      function(response){console.log("Something broke");}
+      function(response){console.log("Something broke while fetching subjects");}
+    );
+
+    req.url = '/api/get_major_req';
+    $http(req).then(
+      function(response){
+        $scope.majorsReqs = response.data;
+        $scope.majors = Object.keys($scope.majorsReqs).sort();
+      },
+      function(response){console.log("Something broke while fetching majors");}
     );
   };
 
   $scope.init();
 
+  $scope.majorChanged = function() {
+    console.log("MAJOR CHANGED");
+    $scope.requirements = $scope.majorsReqs[$scope.selectedMajor];
+  };
+
   $scope.addEntry = function() {
     $scope.entries.push(new Entry());
-  }
+  };
 
   // Entry Object definition
   function Entry() {
@@ -40,6 +58,7 @@ angular.module('cappingApp.controllers', [])
     this.selectedMaristCourse = "";
 
     this.numberChange = function() {
+      if (this.selectedNumber == -1) return;
       var req = {
         method: 'GET',
         url: '/api/get_marist_equal',
