@@ -23,8 +23,14 @@
         </div>
         <div class="selection">
           Number:
-          <select>
+          <select ng-model="entry.selectedNumber" ng-change="entry.numberChange()">
             <option ng-repeat="num in entry.numberList">{{num}}</option>
+          </select>
+        </div>
+        <div class="selection">
+          Marist Options:
+          <select ng-model="entry.selectedMaristCourse">
+            <option ng-repeat="course in entry.maristCourseList">{{course}}</option>
           </select>
         </div>
         <br>

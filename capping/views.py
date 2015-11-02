@@ -36,3 +36,14 @@ def getMappedExternalData(request):
       subjToNums[course.subject] = [course.number]
   data = json.dumps(subjToNums)
   return HttpResponse(data)
+
+def getMaristEqual(request):
+  external_subj = request.GET['subject']
+  external_number = request.GET['number']
+  external = ExternalCourse.objects.get(subject=external_subj, number=external_number)
+  mapping = Mapping.objects.get(external_id=external.id)
+
+  #TODO change this get into a filter and use a for loop on QuerySet
+  internal = InternalCourse.objects.get(id=mapping.internal_id)
+  internal_options = [str(internal.subject) + " " + str(internal.number)]
+  return HttpResponse(json.dumps({'courses': internal_options}))
