@@ -45,7 +45,7 @@
         <select ng-model="selectedMajor" ng-change="majorChanged()">
           <option ng-repeat="major in majors">{{major}}</option>
         </select>
-        <div class="requirement" ng-repeat="req in requirements">{{req}}</div>
+        <div ng-repeat="req in requirements" class="requirement-{{req.fulfilled}}">{{req.name}}</div>
       </div>
     </div>
     {% endverbatim angular %}

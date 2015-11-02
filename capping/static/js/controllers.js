@@ -8,6 +8,7 @@ angular.module('cappingApp.controllers', [])
   $scope.majorsReqs = {};
   $scope.selectedMajor = "";
   $scope.requirements = [];
+  $scope.test = true;
 
   $scope.init = function(){
     var req = {
@@ -40,7 +41,10 @@ angular.module('cappingApp.controllers', [])
 
   $scope.majorChanged = function() {
     console.log("MAJOR CHANGED");
-    $scope.requirements = $scope.majorsReqs[$scope.selectedMajor];
+    $scope.requirements = [];
+    $scope.majorsReqs[$scope.selectedMajor].forEach(function(value){
+      $scope.requirements.push({name: value, fulfilled: false});
+    });
   };
 
   $scope.addEntry = function() {
