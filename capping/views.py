@@ -48,6 +48,7 @@ def getMaristEqual(request):
   internal_options = [str(internal.subject) + " " + str(internal.number)]
   return HttpResponse(json.dumps({'courses': internal_options}))
 
+	
 # TODO remove this and redo it properly
 def getMajorReq(request):
   majors = {}
