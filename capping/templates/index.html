@@ -18,31 +18,41 @@
 
       {% verbatim angular %}      
       
-      <p class="lead">Select Courses To Transfer</p>      
+      <p class="lead">Select Courses To Transfer</p>
+
+      <div id="course-selection-header" class="row">
+	<div class="col-md-2">
+	  <label>Subject:</label>	    
+	</div>
+	<div class="col-md-2">
+	  <label>Number:</label>	    
+	</div>
+	<div class="col-md-2">
+	  <label>Marist Options:</label>	    
+	</div>	
+      </div>
+      
       <div ng-class="entry-container" ng-repeat="entry in entries" class="row">
 
-	<div class="selection form-inline col-md-2">
-	  <label>
-            Subject:
-	  </label>
+	<!--
+	    subject
+	    number
+	    marist options
+	  -->	
+	
+	<div class="selection col-md-2">
           <select ng-model="entry.selectedSubject" ng-change="entry.subjectChange()" class="form-control">
             <option ng-repeat="sub in entry.subjects">{{sub}}</option>
           </select>
         </div>
 	
-        <div class="selection form-inline col-md-2">
-	  <label>
-            Number:
-	  </label>
+        <div class="selection col-md-2">
           <select ng-model="entry.selectedNumber" ng-change="entry.numberChange()" class="form-control">
             <option ng-repeat="num in entry.numberList">{{num}}</option>
           </select>
         </div>
 	
-        <div class="selection form-inline col-md-3">
-	  <label>
-            Marist Options:
-	  </label>
+        <div class="selection col-md-3">
           <select ng-model="entry.selectedMaristCourse" class="form-control">
             <option ng-repeat="course in entry.maristCourseList">{{course}}</option>
           </select>
@@ -56,7 +66,7 @@
       <br><br><br><br>
       
       <p class="lead">Select Major</p>
-      <div class="selection form-inline">
+      <div class="selection">
 	<label>
           Major:
 	</label>
