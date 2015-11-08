@@ -12,6 +12,7 @@ urlpatterns = patterns('capping.views',
     (r'^api/get_marist_equal$', 'getMaristEqual'),
     (r'^api/get_major_req$', 'getMajorReq'),
 	(r'^api/test_major_req$','getMajorReqX'),
+	(r'^api/get_majors$','getMajors'),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name="home"),
     url(r'^.*$', TemplateView.as_view(template_name='index.html'), name="home"),
 )
