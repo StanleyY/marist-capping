@@ -8,9 +8,14 @@
   display: inline-block;
 }
 
-.requirement-false{
+.requirement-false {
 }
-.requirement-true{
+.requirement-true {
   text-decoration: line-through;
   color: red;
+}
+
+#generateReportDiv {
+  padding: 50px 0 100px 0;
+  margin: auto 5px;
 }

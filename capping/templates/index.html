@@ -13,65 +13,69 @@
     <div class="container">
       <h1 class="page-header">Transfer Credit Evaluation</h1>
     </div>
-    
+
     <div class="container" ng-controller="MainCtrl">
 
-      {% verbatim angular %}      
-      
+      {% verbatim angular %}
+
       <p class="lead">Select Courses To Transfer</p>
 
       <div id="course-selection-header" class="row">
-	<div class="col-md-2">
-	  <label>Subject:</label>	    
-	</div>
-	<div class="col-md-2">
-	  <label>Number:</label>	    
-	</div>
-	<div class="col-md-2">
-	  <label>Marist Options:</label>	    
-	</div>	
+        <div class="col-md-2">
+          <label>Subject:</label>
+        </div>
+
+        <div class="col-md-2">
+          <label>Number:</label>
+        </div>
+
+        <div class="col-md-2">
+          <label>Marist Options:</label>
+        </div>
       </div>
-      
+
       <div ng-class="entry-container" ng-repeat="entry in entries" class="row">
-	
-	<div class="selection col-md-2">
+        <div class="selection col-md-2">
           <select ng-model="entry.selectedSubject" ng-change="entry.subjectChange()" class="form-control">
             <option ng-repeat="sub in entry.subjects">{{sub}}</option>
           </select>
         </div>
-	
+
         <div class="selection col-md-2">
           <select ng-model="entry.selectedNumber" ng-change="entry.numberChange()" class="form-control">
             <option ng-repeat="num in entry.numberList">{{num}}</option>
           </select>
         </div>
-	
+
         <div class="selection col-md-3">
           <select ng-model="entry.selectedMaristCourse" class="form-control">
             <option ng-repeat="course in entry.maristCourseList">{{course}}</option>
           </select>
-
         </div>
-	<br><br><br>
+        <br><br><br>
       </div>
-      
+
       <br>
       <button ng-click="addEntry()" class="btn btn-default">Add Entry</button>
       <br><br><br><br>
-      
+
       <p class="lead">Select Major</p>
       <div class="selection">
-	<label>
+        <label>
           Major:
-	</label>
+        </label>
         <select ng-model="selectedMajor" ng-change="majorChanged()" class="form-control">
           <option ng-repeat="major in majors">{{major}}</option>
         </select>
-	
+
         <div ng-repeat="req in requirements" class="requirement-{{req.fulfilled}}">{{req.name}}</div>
       </div>
+
+      <div id="generateReportDiv">
+        <button ng-click="console.log('lol')" class="btn btn-default">Generate Report</button>
+      </div>
+
     </div>
-    
     {% endverbatim angular %}
   </body>
 </html>
