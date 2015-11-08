@@ -8,46 +8,66 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/capping.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
- </head>
+  </head>
   <body ng-app="cappingApp">
-    <b>Selecting Classes Demo</b><br><br>
-    <div ng-controller="MainCtrl">
-      {% verbatim angular %}
-      <div ng-class="entry-container" ng-repeat="entry in entries">
-      >
-        <div class="selection">
-          Subject:
-          <select ng-model="entry.selectedSubject" ng-change="entry.subjectChange()">
+    <div class="container">
+      <h1 class="page-header">Transfer Credit Evaluation</h1>
+    </div>
+    
+    <div class="container" ng-controller="MainCtrl">
+
+      {% verbatim angular %}      
+      
+      <p class="lead">Select Courses To Transfer</p>      
+      <div ng-class="entry-container" ng-repeat="entry in entries" class="row">
+
+	<div class="selection form-inline col-md-2">
+	  <label>
+            Subject:
+	  </label>
+          <select ng-model="entry.selectedSubject" ng-change="entry.subjectChange()" class="form-control">
             <option ng-repeat="sub in entry.subjects">{{sub}}</option>
           </select>
         </div>
-        <div class="selection">
-          Number:
-          <select ng-model="entry.selectedNumber" ng-change="entry.numberChange()">
+	
+        <div class="selection form-inline col-md-2">
+	  <label>
+            Number:
+	  </label>
+          <select ng-model="entry.selectedNumber" ng-change="entry.numberChange()" class="form-control">
             <option ng-repeat="num in entry.numberList">{{num}}</option>
           </select>
         </div>
-        <div class="selection">
-          Marist Options:
-          <select ng-model="entry.selectedMaristCourse">
+	
+        <div class="selection form-inline col-md-3">
+	  <label>
+            Marist Options:
+	  </label>
+          <select ng-model="entry.selectedMaristCourse" class="form-control">
             <option ng-repeat="course in entry.maristCourseList">{{course}}</option>
           </select>
+
         </div>
-        <br>
-        <br>
+	<br><br><br>
       </div>
+      
       <br>
-      <button ng-click="addEntry()">Add Entry</button>
-      <br><br><br>
-      <div><b>Major Requirements Demo</b></div>
-      <div class="majors">
-        Major:
-        <select ng-model="selectedMajor" ng-change="majorChanged()">
+      <button ng-click="addEntry()" class="btn btn-default">Add Entry</button>
+      <br><br><br><br>
+      
+      <p class="lead">Select Major</p>
+      <div class="selection form-inline">
+	<label>
+          Major:
+	</label>
+        <select ng-model="selectedMajor" ng-change="majorChanged()" class="form-control">
           <option ng-repeat="major in majors">{{major}}</option>
         </select>
+	
         <div ng-repeat="req in requirements" class="requirement-{{req.fulfilled}}">{{req.name}}</div>
       </div>
     </div>
+    
     {% endverbatim angular %}
   </body>
 </html>
