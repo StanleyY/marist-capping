@@ -9,11 +9,81 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
  </head>
   <body>
+  {% verbatim angular %}
   <div ng-app="cappingApp" ng-controller="mainCtrl" ng-init="init()">
-    <p>Majors<br>
-      <select ng-model="cmbMajor" ng-change="majorChanged()">
+    <p>
+      <h2>Majors</h2>
+      <br>
+      <select ng-model="cmbMajor" ng-change="majorChanged()" >
         <option ng-repeat="major in majors">{{major}}</option>
       </select>
+    </p>
+    <p>
+    <h2>Dutchess Courses</h2>
+    <br>
+    <select ng-model="cmbDutchess" ng-change="internalChanged()">
+      <option ng-repeat="cr in internalCourses">{{cr}}</option>
+    </select>
+    &nbsp Marist Equivalency : &nbsp <label id="txtMarist">ART 800</label>
+    <input type="button" value="Add" ng-click="onAddClick()"/>
+    </p>
+    <p>
+    <h2>Transfer Courses</h2>
+    <br>
+    <table border="1">
+      <tr><th>Course</th><th>Equivalency</th></tr>
+      <tr ng-repeat="sc in addedCourses">
+        <td>{{sc.external_course.subject + ' ' +sc.external_course.number}}</td>
+        <td>{{sc.internal_course.subject + ' ' +sc.internal_course.number}}</td>
+      </tr>
+    </table>
+    </p>
+    <p>
+      <h2>Requirements</h2>
+      <br>
+    <div>
+      <div style="float:left;margin-left:2px">
+        Static Requirements
+      <table border="1">
+        <tr><th>Course</th><th>Fufilled</th></tr>
+        <tr ng-repeat="sc in staticCourseReqs">
+          <td>{{sc.internal_course.subject + ' ' +sc.internal_course.number}}</td>
+          <td>{{sc.external_course.subject + ' ' +sc.external_course.number}}</td>
+        </tr>
+      </table>
+      </div>
+      <div style="float:left;margin-left:5px">
+        Of List Requirements<br>
+        <span ng-repeat="oli in oflistitems">
+          Choose {{oli.number_selected}} of - Completed: {{oli.completed}}
+          <table border="1">
+            <tr><th>Course</th><th>Fufilled</th></tr>
+            <tr ng-repeat="cr in oli.coursereqs">
+              <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
+              <td>{{cr.external_course.subject + ' ' + cr.external_course.number}}</td>
+            </tr>
+          </table>
+        </span>
+      </div>
+      <div style="float:left;margin-left:5px">
+        Of Set Requirements<br>
+        <span ng-repeat="osi in ofsetitems">
+          Choose {{osi.number_selected}} of each set - Completed: {{osi.completed}}
+          <span ng-repeat="crs in osi.coursereqsets">
+            <table border="1">
+              <tr><th>Course</th><th>Fufilled</th></tr>
+              <tr ng-repeat="cr in crs.coursereqs">
+                <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
+                <td>{{cr.external_course.subject + ' ' + cr.external_course.number}}</td>
+              </tr>
+            </table>
+          </span>
+          -------------------------
+        </span>
+      </div>
+    </div>
+    </p>
   </div>
+  {% endverbatim angular %}
   </body>
 </html>

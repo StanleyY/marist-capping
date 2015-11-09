@@ -51,6 +51,28 @@ def getMaristEqual(request):
   internal_options = [str(internal.subject) + " " + str(internal.number)]
   return HttpResponse(json.dumps({'courses': internal_options}))
   
+def getAllInternalCourses(request):
+	internal_course_models = InternalCourse.objects.all();
+	li = []
+	dump = []
+	for ic in internal_course_models:
+		li.append({'subject':ic.subject,'number':ic.number})
+	
+	dump.append(['courses',li])
+	dump = dict(dump)
+	return HttpResponse(json.dumps(dump))
+	
+def getAllExternalCourses(request):
+	external_course_models = ExternalCourse.objects.all();
+	li = []
+	dump = []
+	for ic in external_course_models:
+		li.append({'subject':ic.subject,'number':ic.number})
+	
+	dump.append(['courses',li])
+	dump = dict(dump)
+	return HttpResponse(json.dumps(dump))
+  
 def getMajors(request):
 	majors_models = Majors.objects.all();
 	li = []
