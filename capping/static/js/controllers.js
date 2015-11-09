@@ -1,6 +1,6 @@
 angular.module('cappingApp.controllers', [])
 
-.controller('MainCtrl', function($scope, $http) {
+.controller('MainCtrl', function($scope, $http, $window) {
   console.log("MAIN CONTROLLER STARTED");
   $scope.subjNumMap = {};
   $scope.entries = [];
@@ -48,6 +48,24 @@ angular.module('cappingApp.controllers', [])
 
   $scope.addEntry = function() {
     $scope.entries.push(new Entry());
+  };
+
+  $scope.generateReport = function() {
+    var data = {
+      'major': $scope.selectedMajor,
+      'entries[]': $scope.entries.map(function(entry){
+        return [entry.selectedSubject + " " + entry.selectedNumber,
+                entry.selectedMaristCourse];
+      })
+    };
+    var url = '/api/get_pdf?';
+    for (var key in data) {
+      if (url != '') {
+          url += '&';
+      }
+      url += key + "=" + encodeURIComponent(data[key]);
+    }
+    window.open(url, '_blank', '');
   };
 
   // Entry Object definition

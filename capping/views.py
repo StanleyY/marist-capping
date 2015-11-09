@@ -76,53 +76,70 @@ def getMajorReq(request):
 
 
 def getPDF(request):
-  print request.GET
-  degree_name = "BACHELORS OF SCIENCE IN STUFF"
+  degree_name = request.GET['major'] if request.GET['major'] else "Undecided Major"
   data = [
-    ["Institution", "Course", "Marist Course"],
-    ["DCC", "ART 101", "ART 101"],
-    ["DCC", "CHEM 101", "ARTS 101"],
-    ["DCC", "03", "SDFSDF"],
-    ["DCC", "04", "SDFSDF"],
-    ["DCC", "05", "GHJGHJGHJ"],
+    ["Institution", "Course", "Marist Course"]
   ]
+
+  selected_courses = request.GET['entries[]'].split(',')
+
+  for i in xrange(0, len(selected_courses), 2):
+    data.append([
+      "DCC",
+      selected_courses[i],    # External Course
+      selected_courses[i+1]   # Internal Course
+    ])
+
   # Create the HttpResponse object with the appropriate PDF headers.
   response = HttpResponse(content_type='application/pdf')
   response['Content-Disposition'] = 'attachment; filename="Unoffical Transfer Report.pdf"'
 
-  width, height = A4
-
-  # Utility function
-  def coord(x, y, unit=1):
-    x, y = x * unit, height -  y * unit
-    return x, y
-
   p = canvas.Canvas(response, pagesize=A4)
+  doc_width, doc_height = A4
+  y_position = doc_height - 40
 
   # Drawing the title
   p.setFont("Helvetica-Bold", 36)
-  p.drawCentredString(width / 2, height - 40, "Unofficial Transfer Report")
-  p.setFont("Helvetica", 20)
-  p.drawCentredString(width / 2, height - 80, degree_name)
+  p.drawCentredString(doc_width / 2, y_position, "Unofficial Transfer Report")
+  y_position = y_position - 40
 
-  style = TableStyle([('ALIGN',(1,1),(-2,-2),'RIGHT'),
-                      ('VALIGN',(0,0),(0,-1),'TOP'),
-                      ('ALIGN',(0,-1),(-1,-1),'CENTER'),
-                      ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
-                      ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-                      ('BOX', (0,0), (-1,-1), 0.25, colors.black),
-                      ])
+  # Draw the degree name
+  p.setFont("Helvetica", 16)
+  with_index = degree_name.find("WITH")
+  if (with_index < 0):
+    p.drawCentredString(doc_width / 2, y_position, degree_name)
+    y_position = y_position - 20
+  else:
+    p.drawCentredString(doc_width / 2, y_position, degree_name[0: with_index])
+    y_position = y_position - 25
+    p.drawCentredString(doc_width / 2, y_position, degree_name[with_index:])
+    y_position = y_position - 20
 
+
+  # Format the data properly
   s = getSampleStyleSheet()
   s = s["BodyText"]
   s.wordWrap = 'CJK'
   data2 = [[Paragraph(cell, s) for cell in row] for row in data]
-  t=Table(data2)
-  t.setStyle(style)
-  t.wrapOn(p, width / 2, height)
-  t.drawOn(p, *coord(5.3, len(data) + 1, cm));
 
-  # Close the PDF object cleanly, and we're done.
+  # Generate and draw the table on the canvas.
+  t = Table(data2)
+  style = TableStyle([('ALIGN',(1,1),(-2,-2),'RIGHT'),
+                    ('VALIGN',(0,0),(0,-1),'TOP'),
+                    ('ALIGN',(0,-1),(-1,-1),'CENTER'),
+                    ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
+                    ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+                    ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+                    ])
+  t.setStyle(style)
+  t.wrapOn(p, doc_width / 2, doc_height)
+  table_width, table_height = t.wrap(0, 0)
+  t.drawOn(p,
+           (doc_width / 2) - (table_width / 2) - 15,
+           y_position - table_height,
+           cm);
+
+  # Finalizes the pdf
   p.showPage()
   p.save()
   return response
