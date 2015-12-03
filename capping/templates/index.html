@@ -59,23 +59,65 @@
       <button ng-click="addEntry()" class="btn btn-default">Add Entry</button>
       <br><br><br><br>
 
-      <p class="lead">Select Major</p>
-      <div class="selection">
-        <label>
-          Major:
-        </label>
-        <select ng-model="selectedMajor" ng-change="majorChanged()" class="form-control">
-          <option ng-repeat="major in majors">{{major}}</option>
-        </select>
-
-        <div ng-repeat="req in requirements" class="requirement-{{req.fulfilled}}">{{req.name}}</div>
+    <br>
+    <br>
+    <p>
+      <h2>Majors</h2>
+      <br>
+      <select ng-model="cmbMajor" ng-change="majorChanged()" >
+        <option ng-repeat="major in majors">{{major}}</option>
+      </select>
+    </p>
+    <p>
+      <h2>Requirements</h2>
+      <br>
+    <div>
+      <div>
+        Static Requirements
+      <table border="1">
+        <tr><th>Course</th><th>Fufilled</th></tr>
+        <tr ng-repeat="sc in staticCourseReqs">
+          <td>{{sc.internal_course.subject + ' ' +sc.internal_course.number}}</td>
+          <td>{{sc.external_course.subject + ' ' +sc.external_course.number}}</td>
+        </tr>
+      </table>
       </div>
-
-      <div id="generateReportDiv">
-        <button ng-click="generateReport()" class="btn btn-default">Generate Report</button>
+      <div>
+        Of List Requirements<br>
+        <span ng-repeat="oli in oflistitems">
+          Choose {{oli.number_selected}} of - Completed: {{oli.completed}}
+          <table border="1">
+            <tr><th>Course</th><th>Fufilled</th></tr>
+            <tr ng-repeat="cr in oli.coursereqs">
+              <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
+              <td>{{cr.external_course.subject + ' ' + cr.external_course.number}}</td>
+            </tr>
+          </table>
+        </span>
       </div>
-
+      <div>
+        Of Set Requirements<br>
+        <span ng-repeat="osi in ofsetitems">
+          Choose {{osi.number_selected}} of each set - Completed: {{osi.completed}}
+          <span ng-repeat="crs in osi.coursereqsets">
+            <table border="1">
+              <tr><th>Course</th><th>Fufilled</th></tr>
+              <tr ng-repeat="cr in crs.coursereqs">
+                <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
+                <td>{{cr.external_course.subject + ' ' + cr.external_course.number}}</td>
+              </tr>
+            </table>
+          </span>
+          -------------------------
+        </span>
+      </div>
     </div>
-    {% endverbatim angular %}
+    <br>
+    <br>
+    <div id="generateReportDiv">
+        <button ng-click="generateReport()" class="btn btn-default">Generate Report</button>
+    </div>
+  </div>
+  {% endverbatim angular %}
   </body>
 </html>

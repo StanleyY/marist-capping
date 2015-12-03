@@ -4,10 +4,14 @@ angular.module('cappingApp.controllers', [])
   console.log("MAIN CONTROLLER STARTED");
   $scope.subjNumMap = {};
   $scope.entries = [];
+
   $scope.majors = [];
-  $scope.majorsReqs = {};
-  $scope.selectedMajor = "";
-  $scope.requirements = [];
+  $scope.cmbMajor = "";
+  $scope.staticCourseReqs = [];
+  $scope.internalCourses = [];
+  $scope.oflistitems = [];
+  $scope.ofsetitems = [];
+  $scope.addedCourses = [];
 
   $scope.init = function(){
     var req = {
@@ -26,11 +30,16 @@ angular.module('cappingApp.controllers', [])
       function(response){console.log("Something broke while fetching subjects");}
     );
 
-    req.url = '/api/get_major_req';
+    req.url = '/api/get_majors';
     $http(req).then(
       function(response){
-        $scope.majorsReqs = response.data;
-        $scope.majors = Object.keys($scope.majorsReqs).sort();
+        var data = response.data;
+        var i = 0;
+        for (i = 0; i < data.majors.length; i++) {
+          $scope.majors.push(data.majors[i].major);
+        }
+        $scope.cmbMajor = $scope.majors[0];
+        $scope.updateMajorReq();
       },
       function(response){console.log("Something broke while fetching majors");}
     );
@@ -38,34 +47,8 @@ angular.module('cappingApp.controllers', [])
 
   $scope.init();
 
-  $scope.majorChanged = function() {
-    console.log("MAJOR CHANGED");
-    $scope.requirements = [];
-    $scope.majorsReqs[$scope.selectedMajor].forEach(function(value){
-      $scope.requirements.push({name: value, fulfilled: false});
-    });
-  };
-
   $scope.addEntry = function() {
     $scope.entries.push(new Entry());
-  };
-
-  $scope.generateReport = function() {
-    var data = {
-      'major': $scope.selectedMajor,
-      'entries[]': $scope.entries.map(function(entry){
-        return [entry.selectedSubject + " " + entry.selectedNumber,
-                entry.selectedMaristCourse];
-      })
-    };
-    var url = '/api/get_pdf?';
-    for (var key in data) {
-      if (url != '') {
-          url += '&';
-      }
-      url += key + "=" + encodeURIComponent(data[key]);
-    }
-    window.open(url, '_blank', '');
   };
 
   // Entry Object definition
@@ -112,6 +95,58 @@ angular.module('cappingApp.controllers', [])
     this.subjectChange();
   }
 
+
+  // Major Related Functions
+  $scope.majorChanged = function() {
+    $scope.updateMajorReq();
+  };
+
+  $scope.updateMajorReq = function() {
+    $http.get('/api/test_major_req?major=' + $scope.cmbMajor).then(
+      function (response) {
+        var data = response.data;
+        var i = 0;
+        var cr;
+        $scope.staticCourseReqs = [];
+        for(i = 0; i < data.courses.length; i++) {
+          $scope.staticCourseReqs.push(data.courses[i]);
+        }
+
+        $scope.oflistitems = [];
+        for (i = 0; i < data.oflistitems.length; i++) {
+          $scope.oflistitems.push(data.oflistitems[i]);
+        }
+
+        $scope.ofsetitems = [];
+        for (i = 0; i < data.ofsetitems.length; i++) {
+          $scope.ofsetitems.push(data.ofsetitems[i]);
+        }
+      },
+      function (response) {
+        console.log('Failed to update major requirements.');
+      });
+  };
+
+  // Report Generation
+  $scope.generateReport = function() {
+    var data = {
+      'major': $scope.cmbMajor,
+      'entries[]': $scope.entries.map(function(entry){
+        return [entry.selectedSubject + " " + entry.selectedNumber,
+                entry.selectedMaristCourse];
+      })
+    };
+    var url = '/api/get_pdf?';
+    for (var key in data) {
+      if (url != '') {
+          url += '&';
+      }
+      url += key + "=" + encodeURIComponent(data[key]);
+    }
+    window.open(url, '_blank', '');
+  };
+
+  /*
   $scope.$watch('entries', function () {
     var marist_classes = $scope.entries.map(
         function(val){return val.selectedMaristCourse.slice(0, -1);});
@@ -123,4 +158,5 @@ angular.module('cappingApp.controllers', [])
       }
     }.bind(marist_classes))
   }, true);
+  */
 })
