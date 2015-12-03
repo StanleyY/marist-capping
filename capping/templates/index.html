@@ -62,32 +62,25 @@
     <br>
     <br>
     <p>
-      <h2>Majors</h2>
-      <br>
+      <h2>Select a Major</h2>
       <select ng-model="cmbMajor" ng-change="majorChanged()" >
         <option ng-repeat="major in majors">{{major}}</option>
       </select>
     </p>
     <p>
-      <h2>Requirements</h2>
-      <br>
     <div>
       <div>
-        Static Requirements
-      <table border="1">
-        <tr><th>Course</th><th>Fufilled</th></tr>
-        <tr ng-repeat="sc in staticCourseReqs">
-          <td>{{sc.internal_course.subject + ' ' +sc.internal_course.number}}</td>
-          <td>{{sc.external_course.subject + ' ' +sc.external_course.number}}</td>
-        </tr>
-      </table>
+        <h3>Static Requirements</h3>
+        <div ng-repeat="sc in staticCourseReqs" class="requirement-{{sc.fulfilled}}">
+          {{sc.name}}
+        </div>
       </div>
       <div>
-        Of List Requirements<br>
+        <h3>Of List Requirements</h3>
         <span ng-repeat="oli in oflistitems">
-          Choose {{oli.number_selected}} of - Completed: {{oli.completed}}
+          Choose {{oli.number_selected}} of the following - Completed: {{oli.completed}}
           <table border="1">
-            <tr><th>Course</th><th>Fufilled</th></tr>
+            <tr><th>Course</th><th>Fulfilled</th></tr>
             <tr ng-repeat="cr in oli.coursereqs">
               <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
               <td>{{cr.external_course.subject + ' ' + cr.external_course.number}}</td>
@@ -96,26 +89,26 @@
         </span>
       </div>
       <div>
-        Of Set Requirements<br>
+        <h3>Of Set Requirements</h3>
         <span ng-repeat="osi in ofsetitems">
           Choose {{osi.number_selected}} of each set - Completed: {{osi.completed}}
           <span ng-repeat="crs in osi.coursereqsets">
             <table border="1">
-              <tr><th>Course</th><th>Fufilled</th></tr>
+              <tr><th>Course</th><th>Fulfilled</th></tr>
               <tr ng-repeat="cr in crs.coursereqs">
                 <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
                 <td>{{cr.external_course.subject + ' ' + cr.external_course.number}}</td>
               </tr>
             </table>
           </span>
-          -------------------------
+          -------------------------<br>
         </span>
       </div>
     </div>
     <br>
     <br>
     <div id="generateReportDiv">
-        <button ng-click="generateReport()" class="btn btn-default">Generate Report</button>
+      <button ng-click="generateReport()" class="btn btn-default">Generate Report</button>
     </div>
   </div>
   {% endverbatim angular %}

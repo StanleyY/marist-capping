@@ -74,8 +74,6 @@ angular.module('cappingApp.controllers', [])
 
       $http(req).then(
         function(response){
-          console.log(response.data.courses);
-          console.log(this);
           this.maristCourseList = response.data.courses;
           this.selectedMaristCourse = this.maristCourseList[0];
         }.bind(this),
@@ -109,7 +107,9 @@ angular.module('cappingApp.controllers', [])
         var cr;
         $scope.staticCourseReqs = [];
         for(i = 0; i < data.courses.length; i++) {
-          $scope.staticCourseReqs.push(data.courses[i]);
+          var req = data.courses[i];
+          var name = req.internal_course.subject + ' ' + req.internal_course.number;
+          $scope.staticCourseReqs.push({name: name, fulfilled: false});
         }
 
         $scope.oflistitems = [];

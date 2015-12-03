@@ -269,7 +269,7 @@ class OfListItemData():
 
 
 class CourseReqData:
-  """ Course Requirement Data, ex and internal courses. External course is 'null' when not fufilled."""
+  """ Course Requirement Data, ex and internal courses. External course is 'null' when not fulfilled."""
   def __init__(self,course):
     self.internal_course = course
     self.external_course = 'null'
