@@ -11,6 +11,7 @@
   </head>
   <body ng-app="cappingApp">
     <div class="container">
+      <img src="{{ STATIC_URL }}Seal Red75.png" class="center-block"/>
       <h1 class="page-header">Transfer Credit Evaluation</h1>
     </div>
 
@@ -22,15 +23,15 @@
 
       <div id="course-selection-header" class="row">
         <div class="col-md-2">
-          <label>Subject:</label>
+          <label><font color="#b31b1b">Subject:</font></label>
         </div>
 
         <div class="col-md-2">
-          <label>Number:</label>
+          <label><font color="#b31b1b">Number: </font></label>
         </div>
 
         <div class="col-md-2">
-          <label>Marist Options:</label>
+          <label><font color="#b31b1b">Marist Options:</font></label>
         </div>
       </div>
 
@@ -70,16 +71,24 @@
     <p>
     <div>
       <div>
-        <h3>Static Requirements</h3>
-        <div ng-repeat="sc in staticCourseReqs" class="requirement-{{sc.fulfilled}}">
-          {{sc.name}}
-        </div>
+        <h3><font color="#b31b1b">Static Requirements</font></h3>
+        
+        <ul class= "list-group">
+           <li ng-repeat="sc in staticCourseReqs" class="requirement-{{sc.fulfilled}} list-group-item">
+             {{sc.name}}
+           </li>
+        </ul>
+    
+      <!--<div ng-repeat="sc in staticCourseReqs" class="requirement-{{sc.fulfilled}}"> {{sc.name}}</div>
+    -->
+
       </div>
-      <div>
-        <h3>Of List Requirements</h3>
+      <div class="row">
+        <div class="col-md-3">
+        <h3>List Requirements</h3>
         <span ng-repeat="oli in oflistitems">
           Choose {{oli.number_selected}} of the following - Completed: {{oli.completed}}
-          <table border="1">
+          <table class="table table-striped ">
             <tr><th>Course</th><th>Fulfilled</th></tr>
             <tr ng-repeat="cr in oli.coursereqs">
               <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
@@ -87,13 +96,15 @@
             </tr>
           </table>
         </span>
+        </div>
       </div>
-      <div>
-        <h3>Of Set Requirements</h3>
+      <div class = "row">
+        <div class = "col-md-3"> 
+        <h3>Set Requirements</h3>
         <span ng-repeat="osi in ofsetitems">
           Choose {{osi.number_selected}} of each set - Completed: {{osi.completed}}
           <span ng-repeat="crs in osi.coursereqsets">
-            <table border="1">
+            <table class="table table-striped ">
               <tr><th>Course</th><th>Fulfilled</th></tr>
               <tr ng-repeat="cr in crs.coursereqs">
                 <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
@@ -104,10 +115,12 @@
           -------------------------<br>
         </span>
       </div>
+      </div>
     </div>
     <br>
     <br>
-    <div id="generateReportDiv">
+
+    <div id="generateReportDiv" class ="row">
       <button ng-click="generateReport()" class="btn btn-default">Generate Report</button>
     </div>
   </div>
