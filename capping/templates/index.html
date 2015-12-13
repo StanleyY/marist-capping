@@ -72,13 +72,13 @@
     <div>
       <div>
         <h3><font color="#b31b1b">Static Requirements</font></h3>
-        
+
         <ul class= "list-group">
            <li ng-repeat="sc in staticCourseReqs" class="requirement-{{sc.fulfilled}} list-group-item">
              {{sc.name}}
            </li>
         </ul>
-    
+
       <!--<div ng-repeat="sc in staticCourseReqs" class="requirement-{{sc.fulfilled}}"> {{sc.name}}</div>
     -->
 
@@ -99,7 +99,7 @@
         </div>
       </div>
       <div class = "row">
-        <div class = "col-md-4"> 
+        <div class = "col-md-4">
         <h3><font color="#b31b1b">Set Requirements</font></h3>
         <span ng-repeat="osi in ofsetitems">
           Choose {{osi.number_selected}} of each set - Completed: {{osi.completed}}
@@ -112,7 +112,6 @@
               </tr>
             </table>
           </span>
-          -------------------------<br>
         </span>
       </div>
       </div>
