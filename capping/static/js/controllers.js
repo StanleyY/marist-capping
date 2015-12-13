@@ -128,7 +128,19 @@ angular.module('cappingApp.controllers', [])
 
         $scope.ofsetitems = [];
         for (i = 0; i < data.ofsetitems.length; i++) {
-          $scope.ofsetitems.push(data.ofsetitems[i]);
+          // Hack to simplify the object.
+          var obj = data.ofsetitems[i];
+          for(i = 0; i < obj.coursereqsets.length; i++){
+            var set = obj.coursereqsets[i];
+            var temp = [];
+            for (var j = 0; j < set.coursereqs.length; j++) {
+              var req = set.coursereqs[j];
+              var name = req.internal_course.subject + ' ' + req.internal_course.number;
+              temp.push({name: name, fulfilled: false});
+            }
+            set.coursereqs = temp;
+          }
+          $scope.ofsetitems.push(obj);
         }
 
         $scope.updateRequirementsStatus();
@@ -171,7 +183,15 @@ angular.module('cappingApp.controllers', [])
 
     $scope.staticCourseReqs.forEach(checkReq);
 
-    $scope.oflistitems.forEach(function(list){list.coursereqs.forEach(checkReq)});
+    $scope.oflistitems.forEach(function(list){
+      list.coursereqs.forEach(checkReq);
+    });
+
+    $scope.ofsetitems.forEach(function(set){
+      set.coursereqsets.forEach(function(list){
+        list.coursereqs.forEach(checkReq);
+      })
+    });
   }
 
   $scope.$watch('entries', $scope.updateRequirementsStatus, true);

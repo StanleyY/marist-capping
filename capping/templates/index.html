@@ -107,9 +107,10 @@
           <span ng-repeat="crs in osi.coursereqsets">
             <table class="table table-striped ">
               <tr><th>Course</th><th>Fulfilled</th></tr>
-              <tr ng-repeat="cr in crs.coursereqs">
-                <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
-                <td>{{cr.external_course.subject + ' ' + cr.external_course.number}}</td>
+              <tr ng-repeat="cr in crs.coursereqs" class="fulfilled-{{cr.fulfilled}}">
+                <td>{{cr.name}}</td>
+                <td ng-if="cr.fulfilled">✔</td>
+                <td ng-if="!cr.fulfilled"></td>
               </tr>
             </table>
           </span>
