@@ -16,6 +16,8 @@ urlpatterns = patterns('capping.views',
     (r'^api/get_majors$','getMajors'),
     (r'^api/get_all_internal_courses$','getAllInternalCourses'),
     (r'^api/get_all_external_courses$','getAllExternalCourses'),
+    (r'^api/get_user$','getUser'),
+    (r'^api/get_update_user$','getUpdateUser'),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name="home"),
     url(r'^.*$', TemplateView.as_view(template_name='index.html'), name="home"),
 )

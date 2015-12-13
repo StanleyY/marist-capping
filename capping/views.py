@@ -337,3 +337,33 @@ def getPDF(request):
   p.showPage()
   p.save()
   return response
+
+def getUser(request):
+  username = request.GET['username']
+  try:
+    user = User.objects.get(username=username)
+  except:
+    user = None
+
+  if not user:
+    user = User(username=username)
+    user.save()
+
+  data = serializers.serialize('json', [ user, ])
+
+  return HttpResponse(data)
+
+def getUpdateUser(request):
+  username = request.GET['username']
+  selected_courses = request.GET['courses']
+  selected_major = request.GET['major']
+  try:
+    user = User.objects.get(username=username)
+  except:
+    return HttpResponse(status=500)
+
+  user.selected_courses = selected_courses
+  user.selected_major = selected_major
+  user.save()
+
+  return HttpResponse(status=200)
