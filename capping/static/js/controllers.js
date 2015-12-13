@@ -121,6 +121,8 @@ angular.module('cappingApp.controllers', [])
         for (i = 0; i < data.ofsetitems.length; i++) {
           $scope.ofsetitems.push(data.ofsetitems[i]);
         }
+
+        $scope.updateRequirementsStatus();
       },
       function (response) {
         console.log('Failed to update major requirements.');
@@ -146,17 +148,18 @@ angular.module('cappingApp.controllers', [])
     window.open(url, '_blank', '');
   };
 
-  /*
-  $scope.$watch('entries', function () {
+  $scope.updateRequirementsStatus = function () {
     var marist_classes = $scope.entries.map(
-        function(val){return val.selectedMaristCourse.slice(0, -1);});
-    $scope.requirements.forEach(function(req){
+        function(val){return val.selectedMaristCourse;});
+    $scope.staticCourseReqs.forEach(function(req){
       if (marist_classes.indexOf(req.name) > -1) {
         req.fulfilled = true;
       } else {
         req.fulfilled = false;
       }
-    }.bind(marist_classes))
-  }, true);
-  */
+    }.bind(marist_classes));
+  }
+
+  $scope.$watch('entries', $scope.updateRequirementsStatus, true);
+
 })
