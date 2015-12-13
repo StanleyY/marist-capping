@@ -18,6 +18,25 @@
     <div class="container" ng-controller="MainCtrl">
 
       {% verbatim angular %}
+      <modal title="Please Login" visible="showLogin">
+        <div>
+          <label>Email address</label>
+          <input type="text" ng-model="username.user" class="form-control" placeholder="Email"/>
+        </div>
+        <br>
+        <div>
+          <label>Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Password" />
+        </div>
+        <br>
+        <button ng-click="login()" class="btn btn-default">Login</button>
+      </modal>
+
+      <div ng-if="user">Welcome Back {{user}}</div>
+      <div>
+        <button ng-click="toggleLogin()" class="btn btn-default" ng-if="!user">Login</button>
+        <button ng-click="logout()" class="btn btn-default" ng-if="user">Logout</button>
+      </div>
 
       <p class="lead">Select Courses To Transfer</p>
 
@@ -122,6 +141,7 @@
     <br>
 
     <div id="generateReportDiv" class ="row">
+    <button ng-click="updateUser()" ng-disabled="!user" class="btn btn-default">Save</button>
       <button ng-click="generateReport()" class="btn btn-default">Generate Report</button>
     </div>
   </div>

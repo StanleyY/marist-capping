@@ -4,6 +4,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import render_to_response
+from django.views.decorators.csrf import csrf_exempt
 
 from capping.models import *
 from capping.major_req_types import *
@@ -346,24 +347,28 @@ def getUser(request):
     user = None
 
   if not user:
-    user = User(username=username)
+    user = User(username=username, selected_courses="[]", selected_major="")
     user.save()
 
-  data = serializers.serialize('json', [ user, ])
+  data = json.dumps({'courses': user.selected_courses,
+                     'major': user.selected_major})
 
   return HttpResponse(data)
 
-def getUpdateUser(request):
-  username = request.GET['username']
-  selected_courses = request.GET['courses']
-  selected_major = request.GET['major']
+
+@csrf_exempt
+def postUpdateUser(request):
+  data = json.loads(request.body)
+  print data.keys()
+  print data
+
   try:
-    user = User.objects.get(username=username)
+    user = User.objects.get(username=data['user'])
   except:
     return HttpResponse(status=500)
 
-  user.selected_courses = selected_courses
-  user.selected_major = selected_major
+  user.selected_courses = data['courses']
+  user.selected_major = data['major']
   user.save()
 
   return HttpResponse(status=200)

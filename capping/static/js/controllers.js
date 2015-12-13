@@ -2,6 +2,9 @@ angular.module('cappingApp.controllers', [])
 
 .controller('MainCtrl', function($scope, $http, $window) {
   console.log("MAIN CONTROLLER STARTED");
+  $scope.showLogin = false;
+  $scope.username = {user: ""};
+  $scope.user = sessionStorage.getItem('user');
   $scope.subjNumMap = {};
   $scope.entries = [];
 
@@ -40,12 +43,64 @@ angular.module('cappingApp.controllers', [])
         }
         $scope.cmbMajor = $scope.majors[0];
         $scope.updateMajorReq();
+        if (!$scope.user) {
+          $scope.toggleLogin();
+        } else {
+          $scope.fetchUser();
+        }
       },
       function(response){console.log("Something broke while fetching majors");}
     );
   };
 
   $scope.init();
+
+  $scope.toggleLogin = function(){
+    $scope.showLogin = !$scope.showLogin;
+  };
+
+  $scope.login = function() {
+    sessionStorage.setItem('user', $scope.username.user);
+    $scope.user = $scope.username.user;
+    $scope.fetchUser();
+    $scope.toggleLogin();
+  }
+
+  $scope.logout = function(){
+    $scope.user = null;
+    sessionStorage.removeItem('user');
+    $window.location.reload();
+  };
+
+  $scope.fetchUser = function() {
+    $http.get('/api/get_user?username=' + $scope.user).then(
+      function (response) {
+        var data = response.data;
+        var userEntries = JSON.parse(data.courses);
+        console.log(data);
+        console.log($scope.entries);
+        if (userEntries.length) {
+          $scope.entries = userEntries;
+        }
+        if (data.major) {
+          $scope.cmbMajor = data.major;
+        }
+        $scope.majorChanged();
+      }, function(){
+        console.log('Something went wrong fetching user.');
+      });
+  };
+
+  $scope.updateUser = function() {
+    var data = {
+      user: $scope.user,
+      courses: JSON.stringify($scope.entries),
+      major: $scope.cmbMajor
+    };
+    $http.post('/api/post_update_user', data);
+  }
+
+
 
   $scope.addEntry = function() {
     $scope.entries.push(new Entry());
