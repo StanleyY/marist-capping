@@ -273,6 +273,7 @@ class CourseReqData:
   def __init__(self,course):
     self.internal_course = course
     self.external_course = 'null'
+    self.fulfilled = False
 
   def isCompleted(self):
     ret = True

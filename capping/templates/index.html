@@ -87,12 +87,13 @@
         <div class="col-md-4">
         <h3><font color="#b31b1b">List Requirements</font></h3>
         <span ng-repeat="oli in oflistitems">
-          Choose {{oli.number_selected}} of the following - Completed: {{oli.completed}}
+          Choose {{oli.number_selected}} of the following:
           <table class="table table-striped ">
             <tr><th>Course</th><th>Fulfilled</th></tr>
-            <tr ng-repeat="cr in oli.coursereqs">
-              <td>{{cr.internal_course.subject + ' ' + cr.internal_course.number}}</td>
-              <td>{{cr.external_course.subject + ' ' + cr.external_course.number}}</td>
+            <tr ng-repeat="cr in oli.coursereqs" class="fulfilled-{{cr.fulfilled}}">
+              <td>{{cr.name}}</td>
+              <td ng-if="cr.fulfilled">✔</td>
+              <td ng-if="!cr.fulfilled"></td>
             </tr>
           </table>
         </span>

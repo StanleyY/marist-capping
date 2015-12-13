@@ -114,7 +114,16 @@ angular.module('cappingApp.controllers', [])
 
         $scope.oflistitems = [];
         for (i = 0; i < data.oflistitems.length; i++) {
-          $scope.oflistitems.push(data.oflistitems[i]);
+          // Hack to simplify the object.
+          var obj = data.oflistitems[i];
+          var temp = [];
+          for(i = 0; i < obj.coursereqs.length; i++){
+            var req = obj.coursereqs[i];
+            var name = req.internal_course.subject + ' ' + req.internal_course.number;
+            temp.push({name: name, fulfilled: false});
+          }
+          obj.coursereqs = temp;
+          $scope.oflistitems.push(obj);
         }
 
         $scope.ofsetitems = [];
@@ -149,15 +158,20 @@ angular.module('cappingApp.controllers', [])
   };
 
   $scope.updateRequirementsStatus = function () {
-    var marist_classes = $scope.entries.map(
-        function(val){return val.selectedMaristCourse;});
-    $scope.staticCourseReqs.forEach(function(req){
+    var marist_classes = $scope.entries.map(function(val){
+      return val.selectedMaristCourse;
+    });
+    var checkReq = function(req){
       if (marist_classes.indexOf(req.name) > -1) {
         req.fulfilled = true;
       } else {
         req.fulfilled = false;
       }
-    }.bind(marist_classes));
+    }.bind(marist_classes);
+
+    $scope.staticCourseReqs.forEach(checkReq);
+
+    $scope.oflistitems.forEach(function(list){list.coursereqs.forEach(checkReq)});
   }
 
   $scope.$watch('entries', $scope.updateRequirementsStatus, true);

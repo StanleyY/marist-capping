@@ -1,4 +1,17 @@
 /*** CSS for Capping Project ***/
+table {
+  border-collapse: collapse;
+}
+
+td {
+  position: relative;
+  padding: 5px 10px;
+}
+tr.fulfilled-false{
+}
+tr.fulfilled-true {
+  color: #b31b1b;
+}
 
 .entry-container {
   display: inline-block;
@@ -11,8 +24,10 @@
 .requirement-false {
 }
 .requirement-true {
-  text-decoration: line-through;
-  color: red;
+  color: #b31b1b;
+}
+.requirement-true:after {
+  content:"✔";
 }
 
 #generateReportDiv {
