@@ -67,7 +67,6 @@ angular.module('cappingApp.controllers', [])
   }
 
   $scope.logout = function(){
-    $scope.user = null;
     sessionStorage.removeItem('user');
     $window.location.reload();
   };
