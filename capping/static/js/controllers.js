@@ -78,7 +78,13 @@ angular.module('cappingApp.controllers', [])
         var data = response.data;
         var userEntries = JSON.parse(data.courses);
         if (userEntries.length > 0) {
-          $scope.entries = []
+          if($scope.entries.length == 1) {
+            // Replace only if it hasn't been touched.
+            // TODO make this dynamic
+            if ($scope.entries[0].selectedSubject == 'ACC' && $scope.entries[0].selectedNumber == 104) {
+              $scope.entries = []
+            }
+          }
           userEntries.forEach(function(obj){
             $scope.entries.push(generateEntryFromObj(obj));
           });
