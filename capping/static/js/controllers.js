@@ -82,7 +82,7 @@ angular.module('cappingApp.controllers', [])
             // Replace only if it hasn't been touched.
             // TODO make this dynamic
             if ($scope.entries[0].selectedSubject == 'ACC' && $scope.entries[0].selectedNumber == 104) {
-              $scope.entries = []
+              $scope.entries = [];
             }
           }
           userEntries.forEach(function(obj){
@@ -110,14 +110,16 @@ angular.module('cappingApp.controllers', [])
     $http.post('/api/post_update_user', data);
   }
 
-
-
   $scope.addEntry = function() {
     var ent = new Entry();
     ent.numberChange();
     ent.subjectChange();
     $scope.entries.push(ent);
   };
+
+  $scope.removeEntry = function(index) {
+    $scope.entries.splice(index,1);
+  }
 
   function generateEntryFromObj(obj){
     var ent = new Entry();

@@ -81,6 +81,10 @@
             <option ng-repeat="course in entry.maristCourseList">{{course}}</option>
           </select>
         </div>
+
+        <div class="deleteButton">
+          <span class="glyphicon glyphicon-remove" ng-click="removeEntry($index)"></span>
+        </div>
         <br><br><br>
       </div>
 

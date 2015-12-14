@@ -21,6 +21,18 @@ tr.fulfilled-true {
   display: inline-block;
 }
 
+.row:hover :nth-child(4) {
+  visibility: visible;
+}
+
+.deleteButton {
+  visibility: hidden;
+}
+
+.deleteButton span:hover {
+  cursor: pointer;
+}
+
 .requirement-false {
 }
 .requirement-true {
