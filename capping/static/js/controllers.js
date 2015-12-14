@@ -1,7 +1,6 @@
 angular.module('cappingApp.controllers', [])
 
 .controller('MainCtrl', function($scope, $http, $window) {
-  console.log("MAIN CONTROLLER STARTED");
   $scope.showLogin = false;
   $scope.username = {user: ""};
   $scope.user = sessionStorage.getItem('user');
@@ -28,7 +27,9 @@ angular.module('cappingApp.controllers', [])
     $http(req).then(
       function(response){
         $scope.subjNumMap = response.data;
-        $scope.addEntry(); // Add an entry once all the data is ready
+        if (!$scope.user) {
+          $scope.addEntry(); // Add an entry once all the data is ready if no user.
+        }
       },
       function(response){console.log("Something broke while fetching subjects");}
     );
