@@ -17,7 +17,19 @@
   <body ng-app="cappingApp">
     <div class="container">
       <img src="{{ STATIC_URL }}Seal Red75.png" class="center-block"/>
+
+
+      <div>
+	<div class="btn-toolbar pull-right">
+	  <div class="btn-group">
+	    <div>
+              <button ng-click="toggleLogin()" class="btn btn-default btn-lg" ng-if="!user">Login</button>
+              <button ng-click="logout()" class="btn btn-default btn-lg" ng-if="user">Logout</button>
+	    </div>
+	  </div>
+	</div>
       <h1 class="page-header">Transfer Credit Evaluation</h1>
+      </div>
     </div>
 
     <div class="container" ng-controller="MainCtrl">
@@ -38,10 +50,6 @@
       </modal>
 
       <div ng-if="user">Welcome Back {{user}}</div>
-      <div>
-        <button ng-click="toggleLogin()" class="btn btn-default" ng-if="!user">Login</button>
-        <button ng-click="logout()" class="btn btn-default" ng-if="user">Logout</button>
-      </div>
 
       <div>
         <p class="lead relative">Select Courses To Transfer
