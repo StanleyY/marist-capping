@@ -41,3 +41,28 @@ tr.fulfilled-true {
 	border-bottom:4px solid #e4183e;
 }
 
+.relative {
+  position: relative;
+}
+
+.helpButton{
+  background: gray;
+  border-radius:50%;
+  color: white;
+  display:inline-block;
+  height:20px;
+  margin-left: 5px;
+  position: absolute;
+  text-align: center;
+  width:20px;
+}
+.helpButton span{
+  display: inline-block;
+  font-size: 10pt;
+  margin: 1px 0px 0px -1px;
+  vertical-align: middle;
+}
+a:hover{
+  color: white;
+  text-decoration: none;
+}

@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/capping.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+      });
+    </script>
   </head>
   <body ng-app="cappingApp">
     <div class="container">
@@ -38,7 +43,11 @@
         <button ng-click="logout()" class="btn btn-default" ng-if="user">Logout</button>
       </div>
 
-      <p class="lead">Select Courses To Transfer</p>
+      <div>
+        <p class="lead relative">Select Courses To Transfer
+        <a class="helpButton" data-toggle="tooltip" title="Can't find your course? Email Us at registrar@marist.edu" href="mailto:registrar@marist.edu"><span>?</span></a>
+        </p>
+      </div>
 
       <div id="course-selection-header" class="row">
         <div class="col-md-2">
