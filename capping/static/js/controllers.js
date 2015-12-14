@@ -77,10 +77,14 @@ angular.module('cappingApp.controllers', [])
       function (response) {
         var data = response.data;
         var userEntries = JSON.parse(data.courses);
-        console.log(data);
-        console.log($scope.entries);
-        if (userEntries.length) {
-          $scope.entries = userEntries;
+        if (userEntries.length > 0) {
+          $scope.entries = []
+          userEntries.forEach(function(obj){
+            $scope.entries.push(generateEntryFromObj(obj));
+          });
+          $scope.entries.forEach(function(ent){
+            ent.numberChange();
+          })
         }
         if (data.major) {
           $scope.cmbMajor = data.major;
@@ -103,8 +107,23 @@ angular.module('cappingApp.controllers', [])
 
 
   $scope.addEntry = function() {
-    $scope.entries.push(new Entry());
+    var ent = new Entry();
+    ent.numberChange();
+    ent.subjectChange();
+    $scope.entries.push(ent);
   };
+
+  function generateEntryFromObj(obj){
+    var ent = new Entry();
+    ent.subjects = obj.subjects;
+    ent.maristOptionsDisabled = obj.maristOptionsDisabled;
+    ent.numberList = obj.numberList;
+    ent.maristCourseList = obj.maristCourseList;
+    ent.selectedSubject = obj.selectedSubject;
+    ent.selectedNumber = obj.selectedNumber;
+    ent.selectedMaristCourse = obj.selectedMaristCourse;
+    return ent;
+  }
 
   // Entry Object definition
   function Entry() {
@@ -136,16 +155,12 @@ angular.module('cappingApp.controllers', [])
       );
     };
 
-    this.numberChange();
-
     this.subjectChange = function() {
       this.maristOptionsDisabled = true;
       this.numberList = $scope.subjNumMap[this.selectedSubject];
       this.selectedNumber = this.numberList[0];
       this.numberChange();
     };
-
-    this.subjectChange();
   }
 
 
