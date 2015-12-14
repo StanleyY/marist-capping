@@ -47,8 +47,10 @@
         <button ng-click="login()" class="btn btn-default">Login</button>
       </modal>
 
-      <div ng-if="user">Welcome Back {{user}}</div>
-
+      <div ng-if="user" class="lead">
+	Welcome Back <small class="lead"><font color="#b31b1b">{{user}}</font></small>
+      </div>
+      
       <div>
         <p class="lead relative">Select Courses To Transfer
         <a class="helpButton" data-toggle="tooltip" title="Can't find your course? Email Us at registrar@marist.edu" href="mailto:registrar@marist.edu"><span>?</span></a>
